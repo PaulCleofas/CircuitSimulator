@@ -1,6 +1,9 @@
 # CircuitSimulator
 CMPUT 275 Final Project
 
+Circuit simulator
+===================
+https://core.ac.uk/download/pdf/53745212.pdf
 
 LU DECOMPOSITION LECTURE for solving linear equations: https://www.youtube.com/watch?v=m3EojSAgIao
 ===============================
