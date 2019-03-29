@@ -7,7 +7,7 @@ LFLAGS=
 circuitsimulator: adjmatrix.o elematrix.o circuitsimulator.o findmesh.o
 	$(CC) circuitsimulator.o adjmatrix.o elematrix.o findmesh.o -o circuitsimulator $(LFLAGS)
 
-circuitsimulator.o: circuitsimulator.cpp adjmatrix.o adjmatrix.h elematrix.o elematrix.h
+circuitsimulator.o: circuitsimulator.cpp adjmatrix.o adjmatrix.h elematrix.o elematrix.h findmesh.h findmesh.o
 	$(CC) circuitsimulator.cpp -o circuitsimulator.o $(CFLAGS)
 
 adjmatrix.o: adjmatrix.h
