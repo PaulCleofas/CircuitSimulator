@@ -50,37 +50,49 @@ int main()
     // int mesh_count = 0;
 
     spanTree(nodes, A, B, C);
+
+    cout << "spanning tree" << endl;
+    for(int j = 0; j < nodes; j++) {
+        for(int k = 0; k < nodes; k++) {
+            cout << B.accessMatrix(j, k)<<"  ";
+        }
+
+        cout << endl;
+    }
     getMesh(nodes, A, B, mesh);
 
     // Displays all current loops
-    for(auto iter = mesh.begin(); iter != mesh.end(); iter++) {
-        int i = 1;
-        switch(i) {
-            case 1:
-                cout << i << "st mesh" << endl;
-                break;
+    // for(auto iter = mesh.begin(); iter != mesh.end(); iter++) {
+    //     int i = 1;
+    //     switch(i) {
+    //         case 1:
+    //             cout << i << "st mesh" << endl;
+    //             break;
 
-            case 2:
-                cout << i << "nd mesh" << endl;
-                break;
+    //         case 2:
+    //             cout << i << "nd mesh" << endl;
+    //             break;
 
-            case 3:
-                cout << i << "rd mesh" << endl;
+    //         case 3:
+    //             cout << i << "rd mesh" << endl;
+    //             break;
 
-            default:
-                cout << i << "th mesh" << endl;
-        }
+    //         default:
+    //             cout << i << "th mesh" << endl;
+    //             break;
+    //     }
 
-        for(int j = 0; j < nodes; j++) {
-            for(int k = 0; k < nodes; k++) {
-                cout << (*iter).accessMatrix(j, k)<<"  ";
-            }
+    //     for(int j = 0; j < nodes; j++) {
+    //         for(int k = 0; k < nodes; k++) {
+    //             cout << (*iter).accessMatrix(j, k)<<"  ";
+    //         }
 
-            cout << endl;
-        }
+    //         cout << endl;
+    //     }
 
-        i++;
-    }
+    //     i++;
+    // }
+    cout << "main" << endl;
 
         
     return 0;
