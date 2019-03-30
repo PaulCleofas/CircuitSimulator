@@ -24,6 +24,7 @@ void ElementMatrix::addComponent(int startVertex, int endVertex, float cost) {
     else
     {
         elemMat[startVertex - 1][endVertex - 1] = cost;
+        elemMat[endVertex - 1][startVertex - 1] = cost;
             
     }
 }
