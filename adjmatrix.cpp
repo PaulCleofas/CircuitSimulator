@@ -17,6 +17,16 @@ AdjacencyMatrix::AdjacencyMatrix(int n) {
 
 }
 
+int AdjacencyMatrix::accessMatrix(int row, int column) {
+    return adjMat[row][column];
+}
+
+int AdjacencyMatrix::accessMatrix(int row, int column, int value) {
+    adjMat[row][column] = value;
+
+    return value;
+}
+
 void AdjacencyMatrix::addEdge(int startVertex, int endVertex) {
     if( startVertex > numNodes || endVertex > numNodes|| startVertex < 0 || endVertex < 0) {   
         cout<<"Invalid edge!\n";
@@ -24,6 +34,7 @@ void AdjacencyMatrix::addEdge(int startVertex, int endVertex) {
     else
     {
         adjMat[startVertex - 1][endVertex - 1] = 1;
+        adjMat[endVertex - 1][startVertex - 1] = 1;
             
     }
 }
@@ -42,27 +53,27 @@ void AdjacencyMatrix::display() {
 }
 
 
-/*
- * Main
- */ 
-int main()
-{
-    int nodes, max_edges, origin, destin;
-    cout<<"Enter number of nodes: ";
-    cin>>nodes;
-    AdjacencyMatrix am(nodes);
-    max_edges = nodes * (nodes - 1);
-    for (int i = 0; i < max_edges; i++)
-    {
-        cout<<"Enter edge (-1 -1 to exit): ";
-        cin>>origin>>destin;
-        if((origin == -1) && (destin == -1))
-            break;
-        am.addEdge(origin, destin);
-    }
-    am.display();
-    return 0;
-}
+// /*
+//  * Main
+//  */ 
+// int main()
+// {
+//     int nodes, max_edges, origin, destin;
+//     cout<<"Enter number of nodes: ";
+//     cin>>nodes;
+//     AdjacencyMatrix am(nodes);
+//     max_edges = nodes * (nodes - 1);
+//     for (int i = 0; i < max_edges; i++)
+//     {
+//         cout<<"Enter edge (-1 -1 to exit): ";
+//         cin>>origin>>destin;
+//         if((origin == -1) && (destin == -1))
+//             break;
+//         am.addEdge(origin, destin);
+//     }
+//     am.display();
+//     return 0;
+// }
 
 
 
