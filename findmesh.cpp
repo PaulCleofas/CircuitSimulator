@@ -38,8 +38,8 @@ void spanTree(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<int>& C){
 void prune(int n, AdjacencyMatrix& D){
     bool pruned = true;
     int current_vertex;
-    // // The number of connected vertices to a particular vertex is one if
-    // // it is a vertex to be pruned
+    // The number of connected vertices to a particular vertex is one if
+    // it is a vertex to be pruned
     int connection_count = 0;
     // D is the nxn matrix to be pruned
     // A vertex is to be pruned if it connects to only one other vertex
@@ -54,7 +54,6 @@ void prune(int n, AdjacencyMatrix& D){
             }
             if (connection_count == 1){
                 pruned = true;
-                cout << "Pruning the vertex: " << current_vertex + 1 << endl;
                 // remove edge both ways on all other vertices
                 for (int j = 0; j < n; j++){
                     D.accessMatrix(current_vertex, j, 0);
@@ -68,27 +67,10 @@ void prune(int n, AdjacencyMatrix& D){
 }
 
 void getMesh(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<AdjacencyMatrix>& mesh){
-    // m is the number of fundamental cycles
-    // A, B, C, D are matrices of size n×n (and 0 ≤ k ≤ m−1);
+    // A, B, C, D are matrices of size n×n ;
     AdjacencyMatrix C(n);
     AdjacencyMatrix D(n);
-    // AdjacencyMatrix temp1(n);
-    // AdjacencyMatrix temp2(n);
 
-    // for (int i = 0; i < n; i++){
-    //     for (int j = 0; j < n; j++){
-    //         temp1.accessMatrix(i, j, 2);
-    //         temp2.accessMatrix(i, j, 3);
-    //     }
-    // }
-
-    // mesh.push_back(temp1);
-    // mesh.push_back(temp2);
-
-    // cout << "The first mesh stored was: " << endl;
-    // mesh.front().display();
-    // cout << "The second mesh stored was: " << endl;
-    // (*(mesh.begin()+1)).display();
     // A is the original adjacency matrix
     // B is the adjacency matrix of the spanning tree
     // D is the adjacency matrix of the spanning tree , augmented with the addition of the k−th discarded link
@@ -117,29 +99,13 @@ void getMesh(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<AdjacencyMatr
                         D.accessMatrix(i, j, B.accessMatrix(i, j));
                     }
                 }
-                cout << "Matrix D has been reset to the spanning tree:" << endl;
-                D.display();
+                // Add the discarded link
                 D.accessMatrix(i, j, 1);
                 D.accessMatrix(j, i, 1);
-                cout << "added link " << i+1 << ", " << j+1 << endl;
-                cout << "now it is: " << endl;
-                D.display();
-                // prune the D matrix
-                cout << "Passing to prune function..." << endl;
                 prune(n, D);
-                cout << "After pruning: " << endl;
-                D.display();
-                // Store the mesh
-                cout << "Storing the mesh" << endl;
                 mesh.push_back(D);
-                cout << "The last stored mesh: " << endl;
-                mesh.back().display();
-                cout << "The first mesh stored was: " << endl;
-                mesh.front().display();
             }
         }
     }
-
-    // Displays all current loops
     return;
 }
