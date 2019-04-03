@@ -52,6 +52,7 @@ int main()
 
     vector<AdjacencyMatrix> mesh;  // array of current loops to be found
     getMesh(nodes, A, B, mesh);
+    setOrientation(nodes, mesh);
 
     // Displays all current loops
     int display_counter = 1;

@@ -87,8 +87,6 @@ void getMesh(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<AdjacencyMatr
     }
     cout << "Discarded Links Matrix: (A-B)" << endl;
     C.display();
-
-    int countEdge = 0;
     // here we find all the cycles of the fundamental set
     // Traversing only the upper triangle of the C matrix
     for (int i = 0; i < n-1; i++){
@@ -105,40 +103,26 @@ void getMesh(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<AdjacencyMatr
                 D.accessMatrix(i, j, 1);
                 D.accessMatrix(j, i, 1);
                 prune(n, D);
-                AdjacencyMatrix E(n);
-                if (!mesh.empty()) {
-                    // cout << "mesh previous" << endl;
-                    // (mesh.back()).display();
-                    // cout << "mesh current" << endl;
-                    // D.display();
-                    for (int i = 0; i < n; i++){
-                        for (int j = 0; j < n; j++){
-
-                            if (((mesh.back()).accessMatrix(i,j) || D.accessMatrix(i, j)) 
-                                && ((mesh.back()).accessMatrix(i,j) != D.accessMatrix(i, j))) { 
-
-                                E.accessMatrix(i, j, 1);
-                                countEdge++;
-
-                            }
-                        }
-                    }  
-                // cout << "emergency mesh" << endl;
-                // E.display();  
-                // }
-
-
-                if (countEdge == 4) {
-                mesh.push_back(E);
-                }
-
-                else{
-                    mesh.push_back(D);
-                }
-
-                countEdge = 0;
+                mesh.push_back(D);
             }
         }
+    }
+    return;
+}
+
+void setOrientation(int n, vector<AdjacencyMatrix>& mesh){
+    // n is the size of the matrices
+    // loop through all independent cycles
+    // set an arbitrary orientation for each, based on the first encountered link
+    for(auto iter = mesh.begin(); iter != mesh.end(); iter++){
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++){
+                if ((*iter).accessMatrix(i,j) == 1){
+                    (*iter).accessMatrix(j, i, 0);
+                    break;
+                }
+            }
+        }        
     }
     return;
 }

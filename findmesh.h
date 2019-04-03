@@ -24,4 +24,6 @@ void getMesh(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<AdjacencyMatr
     // D is the adjacency matrix of the spanning tree , augmented with the addition of the k−th discarded link
     // mesh contains a collection of fundamental cycles, a.k.a. loop currents, represented as matrices
 
+void setOrientation(int n, vector<AdjacencyMatrix>& mesh);
+
 #endif
