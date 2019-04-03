@@ -1,6 +1,7 @@
 #include "adjmatrix.h"
 #include "elematrix.h"
 #include "findmesh.h"
+#include "LU.h"
 using namespace std;
 
 /*
@@ -38,10 +39,10 @@ int main()
 
     cout << "Adjacency Matrix" << endl;
     A.display();
-    // cout << "Resistance Matrix" << endl;
-    // R.display();
-    // cout << "Voltage Matrix" << endl;
-    // V.display();
+    cout << "Resistance Matrix" << endl;
+    R.display();
+    cout << "Voltage Matrix" << endl;
+    V.display();
 
     AdjacencyMatrix B(nodes);  // adjacency matrix for spanning tree
     vector<int> C;  // list of vertices to be included in the spanning tree
@@ -79,6 +80,31 @@ int main()
         (*iter).display();
         cout << endl;
     }
-        
+
+    vector<AdjacencyMatrix> LUVector;
+    LUVector = prepareLU(nodes, mesh, R, V);
+
+    // Display the LU matrices
+    int display_counter_new = 1;
+    for(auto iter = LUVector.begin(); iter != LUVector.end(); iter++) {
+        switch(display_counter_new) {
+            case 1:
+                cout << "Matrix A" << endl;
+                display_counter_new++;
+                break;
+            case 2:
+                cout << "Matrix B" << endl;
+                display_counter_new++;
+                break;
+            default:
+                cout << display_counter << "Too many meshes" << endl;
+                display_counter_new++;
+                break;
+        }
+
+        (*iter).display();
+        cout << endl;
+    }
+
     return 0;
 }

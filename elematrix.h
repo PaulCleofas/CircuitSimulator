@@ -13,6 +13,10 @@ class ElementMatrix {
 
         void display();
 
+        int accessMatrix(int row, int column);
+
+        int accessMatrix(int row, int column, int value);
+
     private:
         int numNodes;
         float **elemMat;

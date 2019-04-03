@@ -29,6 +29,16 @@ void ElementMatrix::addComponent(int startVertex, int endVertex, float cost) {
     }
 }
 
+int ElementMatrix::accessMatrix(int row, int column) {
+    return elemMat[row][column];
+}
+
+int ElementMatrix::accessMatrix(int row, int column, int value) {
+    elemMat[row][column] = value;
+
+    return value;
+}
+
  /*
  * Print the graph
  */ 
