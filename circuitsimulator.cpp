@@ -121,32 +121,40 @@ int main()
     I = getCurrent(nodes, X, mesh, I);
     // I.display();
 
-    cout << "Node voltages:" << endl;
+    // cout << "Node voltages:" << endl;
     // Get the node voltage matrix V
     ElementMatrix nodeVoltages(nodes);
     nodeVoltages = getVoltage(nodes, I, V, R, nodeVoltages);
     // nodeVoltages.display();
+    I.display();
+    cout << endl;
 
+    // cout << -I.accessMatrix(3,1) << endl;
 
     // Simple way for user to ask for node stats
-    // cout << "Circuit analysis complete. Enter a command:" << endl;
-    // string command;
-    // int start, end;
-    
-    // while (true){
-    //     cin >> command;
-    //     cout << command;
-    //     if (command == "I"){
-    //         cout << "I is good" << endl;
-    //         cin >> start >> end;
-    //         cout << I.accessMatrix(start, end) << endl;
-    //     }
-    //     else if (command == "V"){
-    //         cout << "V is good" << endl;
-    //         cin >> start >> end;
-    //         cout << nodeVoltages.accessMatrix(start, end) << endl;
-    //     }
-    // }
+    cout << "Circuit analysis complete. Enter a command:" << endl;
+    char command;
+    int start, end;
+    cin >> command;
+
+    while (true){
+        if (command == 'I'){
+            cout << "I detected" << endl;
+            cin >> start >> end;
+            cout << I.accessMatrix(start-1, end-1) << endl;
+            cin >> command;
+        }
+        else if (command == 'V'){
+            cout << "V detected" << endl;
+            cin >> start >> end;
+            cout << nodeVoltages.accessMatrix(start-1, end-1) << endl;
+            cin >> command;
+        }
+        else{
+            cout << "No command detected" << endl;
+            cin >> command;
+        }
+    }
 
     return 0;
 }
