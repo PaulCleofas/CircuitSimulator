@@ -78,34 +78,37 @@ void decompose(int m, ElementMatrix &A, ElementMatrix& L, ElementMatrix& U){
 // Source: http://ganeshtiwaridotcomdotnp.blogspot.com/2009/12/c-c-code-lu-decomposition-for-solving.html
 // Modified by Daniel Florendo (04/03/2019)
 vector<float> solveEquation(int m, ElementMatrix& L, ElementMatrix& U, vector<int>& B){
-    int i,p;
+    signed int i,p;
     float sum;
 
     // Finding Z in LZ = B
     vector<float> Z;
     Z.reserve(m);
+    for(int a = 0; a < m; a++){
+        Z.push_back(0);
+    }
 
-    // Forward subtitution method
+    // Forward substitution method
     for (i = 0; i < m; i++) {
         sum = 0;
         for (p = 0; p < i; p++)
         sum += L.accessMatrix(i, p) * Z[p];
         float value = (B[i] - sum) / L.accessMatrix(i, i);
-        // Z[p] = (B[i] - sum) / L.accessMatrix(i, i);
-        Z.push_back(value);
+        Z.at(i) = value;
     }
-
+    // Finding X in UX = Z
     vector<float> X;
     X.reserve(m);
-    // Finding X in UX = Z
-    for(i = m-1; i > -1; i--)
-    {
+    for(int a = 0; a < m; a++){
+        X.push_back(0);
+    }
+
+    for (i = m-1; i > -1; i--) {
         sum = 0;
         for(p = m-1; p > i; p--)
             sum += U.accessMatrix(i, p) * X[p];
-            // X[i] = (Z[i] - sum) / U.accessMatrix(i, i);
             float value = (Z[i] - sum) / U.accessMatrix(i, i);
-            X.insert(X.begin(), value);
+            X.at(i) = value;
     }
 
     return X;
