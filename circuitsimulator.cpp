@@ -1,19 +1,15 @@
-#include "adjmatrix.h"
 #include "elematrix.h"
 #include "findmesh.h"
 #include "LU.h"
 using namespace std;
 
-/*
- * Main
- */ 
 int main()
 {
     int nodes, max_edges, origin, destin;
-    float resistance, voltage;
+    int resistance, voltage;
     cout << "Enter number of nodes: ";
     cin >> nodes;
-    AdjacencyMatrix A(nodes); // matrix for adjacency
+    ElementMatrix A(nodes); // matrix for adjacency
     ElementMatrix R(nodes); // matrix for resistance
     ElementMatrix V(nodes); // matrix for voltages
 
@@ -24,17 +20,20 @@ int main()
         cin >> origin >> destin;
         if((origin == -1) && (destin == -1))
             break;
-        A.addEdge(origin, destin);
+        A.addComponent(origin, destin, 1);
+        A.addComponent(destin, origin, 1);
 
         //For resistance
         cout << "   Enter resistance in branch(" << origin << "," << destin << "): ";
         cin >> resistance;
         R.addComponent(origin, destin, resistance);
+        R.addComponent(destin, origin, resistance);
 
         //For voltage
         cout << "   Enter voltage in branch("<< origin << "," << destin << "): ";
         cin >> voltage;
         V.addComponent(origin, destin, voltage);
+        V.addComponent(destin, origin, -(voltage)); // voltage orientation is NOT arbitrary
     }
 
     cout << "Adjacency Matrix" << endl;
@@ -44,14 +43,14 @@ int main()
     cout << "Voltage Matrix" << endl;
     V.display();
 
-    AdjacencyMatrix B(nodes);  // adjacency matrix for spanning tree
+    ElementMatrix B(nodes);  // adjacency matrix for spanning tree
     vector<int> C;  // list of vertices to be included in the spanning tree
 
     spanTree(nodes, A, B, C);
     cout << "Spanning Tree" << endl;
     B.display();
 
-    vector<AdjacencyMatrix> mesh;  // array of current loops to be found
+    vector<ElementMatrix> mesh;  // array of current loops to be found
     getMesh(nodes, A, B, mesh);
     setOrientation(nodes, mesh);
 
@@ -81,30 +80,37 @@ int main()
         cout << endl;
     }
 
-    vector<AdjacencyMatrix> LUVector;
-    LUVector = prepareLU(nodes, mesh, R, V);
+    // LHS is the coefficient matrix A in equation AX = B
+    auto LHS = computeLHS(nodes, mesh, R, V);
+    cout << "LHS Matrix" << endl;
+    LHS.display();
+    cout << endl;
 
-    // Display the LU matrices
-    int display_counter_new = 1;
-    for(auto iter = LUVector.begin(); iter != LUVector.end(); iter++) {
-        switch(display_counter_new) {
-            case 1:
-                cout << "Matrix A" << endl;
-                display_counter_new++;
-                break;
-            case 2:
-                cout << "Matrix B" << endl;
-                display_counter_new++;
-                break;
-            default:
-                cout << display_counter << "Too many meshes" << endl;
-                display_counter_new++;
-                break;
-        }
-
-        (*iter).display();
-        cout << endl;
+    // RHS is the matrix B in AX = B
+    auto RHS = computeRHS(nodes, mesh, V);
+    cout << "RHS Matrix" << endl;
+    for (auto iter = RHS.begin(); iter != RHS.end(); iter++) {
+        cout << *iter << " ";
     }
+    cout << endl << endl;
 
+    // Decompose LHS
+    ElementMatrix L(mesh.size());
+    ElementMatrix U(mesh.size());
+
+    decompose(mesh.size(), LHS, L, U);
+
+    cout << "L Matrix" << endl;
+    L.display();
+    cout << endl;
+    cout << "U Matrix" << endl;
+    U.display();
+    cout << endl;
+
+
+    vector<float> X = solveEquation(mesh.size(), L, U, RHS);
+    cout << "Mesh currents:" << endl;
+    for (auto iter = X.begin(); iter != X.end(); iter++)
+        cout<< *iter << endl;
     return 0;
 }

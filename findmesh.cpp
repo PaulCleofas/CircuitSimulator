@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void spanTree(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<int>& C){
+void spanTree(int n, ElementMatrix& A, ElementMatrix& B, vector<int>& C){
     // A is the original adjacency matrix
     // B is the adjacency matrix of the spanning tree
     // C is a vector of size n and is the list of vertices already included in the spanning tree
@@ -35,7 +35,7 @@ void spanTree(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<int>& C){
     return;
 }
 
-void prune(int n, AdjacencyMatrix& D){
+void prune(int n, ElementMatrix& D){
     bool pruned = true;
     int current_vertex;
     // The number of connected vertices to a particular vertex is one if
@@ -66,10 +66,10 @@ void prune(int n, AdjacencyMatrix& D){
     return;
 }
 
-void getMesh(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<AdjacencyMatrix>& mesh){
+void getMesh(int n, ElementMatrix& A, ElementMatrix& B, vector<ElementMatrix>& mesh){
     // A, B, C, D are matrices of size n×n ;
-    AdjacencyMatrix C(n);
-    AdjacencyMatrix D(n);
+    ElementMatrix C(n);
+    ElementMatrix D(n);
 
     // A is the original adjacency matrix
     // B is the adjacency matrix of the spanning tree
@@ -95,7 +95,7 @@ void getMesh(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<AdjacencyMatr
         for(int j = i+1; j < n; j++){
             if (C.accessMatrix(i, j) == 1){  // here we find a discarded link between nodes i and j
                 // reset the D matrix as the spanning tree
-                AdjacencyMatrix D(n);
+                ElementMatrix D(n);
                 for (int i = 0; i < n; i++){
                     for (int j = 0; j < n; j++){
                         D.accessMatrix(i, j, B.accessMatrix(i, j));
@@ -105,7 +105,7 @@ void getMesh(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<AdjacencyMatr
                 D.accessMatrix(i, j, 1);
                 D.accessMatrix(j, i, 1);
                 prune(n, D);
-                AdjacencyMatrix E(n);
+                ElementMatrix E(n);
                 if (!mesh.empty()) {
                     // cout << "mesh previous" << endl;
                     // (mesh.back()).display();
@@ -143,7 +143,7 @@ void getMesh(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<AdjacencyMatr
     return;
 }
 
-void setOrientation(int n, vector<AdjacencyMatrix>& mesh){
+void setOrientation(int n, vector<ElementMatrix>& mesh){
     // n is the size of the matrices
     // loop through all independent cycles
     // set an arbitrary orientation for each, based on the first encountered link

@@ -17,6 +17,16 @@ ElementMatrix::ElementMatrix(int n) {
 
 }
 
+float ElementMatrix::accessMatrix(int row, int column, float value) {
+    elemMat[row][column] = value;
+
+    return value;
+}
+
+float ElementMatrix::accessMatrix(int row, int column) {
+    return elemMat[row][column];
+}
+
 void ElementMatrix::addComponent(int startVertex, int endVertex, float cost) {
     if( startVertex > numNodes || endVertex > numNodes|| startVertex < 0 || endVertex < 0) {   
         cout<<"Invalid edge!\n";
@@ -24,24 +34,10 @@ void ElementMatrix::addComponent(int startVertex, int endVertex, float cost) {
     else
     {
         elemMat[startVertex - 1][endVertex - 1] = cost;
-        elemMat[endVertex - 1][startVertex - 1] = cost;
             
     }
 }
 
-int ElementMatrix::accessMatrix(int row, int column) {
-    return elemMat[row][column];
-}
-
-int ElementMatrix::accessMatrix(int row, int column, int value) {
-    elemMat[row][column] = value;
-
-    return value;
-}
-
- /*
- * Print the graph
- */ 
 void ElementMatrix::display() {
     int i,j;
     for(i = 0;i < numNodes;i++)

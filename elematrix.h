@@ -9,13 +9,17 @@ class ElementMatrix {
         /* Constructor */
         ElementMatrix(int n);
 
+        // Returns the value of an entry in the matrix
+        float accessMatrix(int row, int column);
+
+        // Changes the value of an entry in matrix and returns this value
+        float accessMatrix(int row, int column, float value);
+
+        // Add edge to the graph
         void addComponent(int startVertex, int endVertex, float cost);
-
+        
+        // Print the matrix
         void display();
-
-        int accessMatrix(int row, int column);
-
-        int accessMatrix(int row, int column, int value);
 
     private:
         int numNodes;

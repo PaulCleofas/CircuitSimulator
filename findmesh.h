@@ -3,19 +3,19 @@
 
 #include <iostream>
 #include <vector>
-#include "adjmatrix.h"
+#include "elematrix.h"
 
 using namespace std;
-void spanTree(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<int>& C);
+void spanTree(int n, ElementMatrix& A, ElementMatrix& B, vector<int>& C);
     // A is the original adjacency matrix
     // B is the adjacency matrix of the spanning tree
     // C is a vector of size n and is the list of vertices already included in the spanning tree
 
 
-void prune(int n, AdjacencyMatrix* D);
+void prune(int n, ElementMatrix* D);
 
 
-void getMesh(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<AdjacencyMatrix>& mesh);
+void getMesh(int n, ElementMatrix& A, ElementMatrix& B, vector<ElementMatrix>& mesh);
     // m is the number of fundamental cycles
     // A, B, C, D are matrices of size n×n (and 0 ≤ k ≤ m−1);
 
@@ -24,6 +24,7 @@ void getMesh(int n, AdjacencyMatrix& A, AdjacencyMatrix& B, vector<AdjacencyMatr
     // D is the adjacency matrix of the spanning tree , augmented with the addition of the k−th discarded link
     // mesh contains a collection of fundamental cycles, a.k.a. loop currents, represented as matrices
 
-void setOrientation(int n, vector<AdjacencyMatrix>& mesh);
+void setOrientation(int n, vector<ElementMatrix>& mesh);
+    // Orients each mesh arbitrarily
 
 #endif
