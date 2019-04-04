@@ -116,11 +116,37 @@ int main()
     }
     cout << endl;
 
+    // Get the current matrix I
     ElementMatrix I(nodes);
     I = getCurrent(nodes, X, mesh, I);
-    I.display();
+    // I.display();
 
+    cout << "Node voltages:" << endl;
+    // Get the node voltage matrix V
+    ElementMatrix nodeVoltages(nodes);
+    nodeVoltages = getVoltage(nodes, I, V, R, nodeVoltages);
+    // nodeVoltages.display();
+
+
+    // Simple way for user to ask for node stats
+    // cout << "Circuit analysis complete. Enter a command:" << endl;
+    // string command;
+    // int start, end;
     
-    
+    // while (true){
+    //     cin >> command;
+    //     cout << command;
+    //     if (command == "I"){
+    //         cout << "I is good" << endl;
+    //         cin >> start >> end;
+    //         cout << I.accessMatrix(start, end) << endl;
+    //     }
+    //     else if (command == "V"){
+    //         cout << "V is good" << endl;
+    //         cin >> start >> end;
+    //         cout << nodeVoltages.accessMatrix(start, end) << endl;
+    //     }
+    // }
+
     return 0;
 }

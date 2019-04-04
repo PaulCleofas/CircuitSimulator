@@ -36,3 +36,15 @@ ElementMatrix getCurrent(int n, vector<float> X, vector<ElementMatrix>& mesh, El
     return I;
 };
 
+
+ElementMatrix getVoltage(int n, ElementMatrix& I, ElementMatrix& V, ElementMatrix& R, ElementMatrix& nodeVoltages){
+    // Just multiply I and R for each element since V = IR plus any sources in that node
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < n; j++){
+            float voltage = I.accessMatrix(i,j) * R.accessMatrix(i,j);
+            voltage += V.accessMatrix(i,j);
+            nodeVoltages.accessMatrix(i,j,voltage);
+        }
+    }
+    return nodeVoltages;
+};
