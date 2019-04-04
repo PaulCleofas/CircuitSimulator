@@ -8,7 +8,6 @@ ElementMatrix computeLHS(int n, vector<ElementMatrix>& mesh, ElementMatrix& R, E
     ElementMatrix A(m);
 
     // Note1: loop orientation doesn't matter. It only affects sign of final answer when solving the matrix
-    // Note2: resistances are put on matrix A, voltage sources on B.
     // Loop through each mesh
     for (int i = 0; i < m; i++){
         // For each row i, iterate through each mesh to find which
@@ -83,7 +82,6 @@ vector<float> solveEquation(int m, ElementMatrix& L, ElementMatrix& U, vector<in
 
     // Finding Z in LZ = B
     vector<float> Z;
-    Z.reserve(m);
     for(int a = 0; a < m; a++){
         Z.push_back(0);
     }
@@ -98,7 +96,6 @@ vector<float> solveEquation(int m, ElementMatrix& L, ElementMatrix& U, vector<in
     }
     // Finding X in UX = Z
     vector<float> X;
-    X.reserve(m);
     for(int a = 0; a < m; a++){
         X.push_back(0);
     }

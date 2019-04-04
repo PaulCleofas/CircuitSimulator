@@ -1,6 +1,7 @@
 #include "elematrix.h"
 #include "findmesh.h"
 #include "LU.h"
+#include "results.h"
 using namespace std;
 
 int main()
@@ -110,7 +111,16 @@ int main()
 
     vector<float> X = solveEquation(mesh.size(), L, U, RHS);
     cout << "Mesh currents:" << endl;
-    for (auto iter = X.begin(); iter != X.end(); iter++)
+    for (auto iter = X.begin(); iter != X.end(); iter++){
         cout<< *iter << endl;
+    }
+    cout << endl;
+
+    ElementMatrix I(nodes);
+    I = getCurrent(nodes, X, mesh, I);
+    I.display();
+
+    
+    
     return 0;
 }
